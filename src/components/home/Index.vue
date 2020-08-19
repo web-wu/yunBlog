@@ -13,8 +13,11 @@
     </div>
     <!-- 右边信息布局 -->
     <div class="content_right">
-      <div><IdCard></IdCard></div>
-      <div><Search :tags="tags" @tagsVal="handlTagEcent" @searcher="clickSearch"></Search></div>
+      <IdCard></IdCard>
+      <Search :tags="tags" @tagsVal="handlTagEcent" @searcher="clickSearch"></Search>
+      <Hotarticle></Hotarticle>
+      <Ad></Ad>
+      <FriendLink></FriendLink>
     </div>
   </div>
 </template>
@@ -22,6 +25,9 @@
 <script>
 import IdCard from '../../components/home/IdCard'
 import Search from '../../components/home/Search'
+import Hotarticle from '../../components/home/Hotarticle'
+import Ad from '../../components/home/Ad'
+import FriendLink from '../../components/home/friendLink'
 export default {
   data () {
     return {
@@ -45,7 +51,10 @@ export default {
   },
   components: {
     IdCard,
-    Search
+    Search,
+    Hotarticle,
+    Ad,
+    FriendLink
   },
   methods: {
     handlTagEcent (val) {

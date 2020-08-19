@@ -4,6 +4,7 @@ import Home from '../components/Home'
 import Admin from '../components/Admin'
 import Index from '../components/home/Index'
 import Addblog from '../components/home/Addblog'
+import ArticleList from '../components/home/Articlelist'
 
 Vue.use(VueRouter)
 
@@ -14,7 +15,14 @@ const routes = [
     component: Home,
     children: [
       { path: '/', redirect: '/index' },
-      { path: '/index', component: Index },
+      {
+        path: '/index',
+        component: Index,
+        redirect: '/articlelist',
+        children: [
+          { path: '/articlelist', component: ArticleList }
+        ]
+      },
       { path: '/addblog', component: Addblog }
     ]
   },
