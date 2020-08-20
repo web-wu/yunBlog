@@ -7,6 +7,9 @@
     <main>
       <router-view></router-view>
     </main>
+    <footer>
+      云博客 | 备案号 123698-7
+    </footer>
   </div>
 </template>
 
@@ -33,19 +36,19 @@ export default {
             {
               id: 0,
               title: '业务合作',
-              path: ''
+              path: '/cooperation'
             },
             {
               id: 1,
               title: '广告投放',
-              path: ''
+              path: '/ad'
             }
           ]
         },
         {
           id: 3,
           title: '成功案例',
-          path: ''
+          path: '/successful'
         }
       ],
       signIn: [
@@ -76,7 +79,6 @@ export default {
 <style lang="less" scoped>
 @themoColor: #007cdc;
 @bgColor: #019fde;
-@fontColor: #123456;
 .containner{
   width: 100%;
   height: 100%;
@@ -85,7 +87,6 @@ export default {
     padding: 0 3.447917rem;
     font-size: .208333rem;
     background-color: @themoColor;
-    color: @fontColor;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -96,6 +97,19 @@ export default {
     .nav{
       width: 5.208333rem;
     }
+  }
+  main{
+    width: 100%;
+    background-color: @bgColor;
+  }
+  footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 0.416667rem;
+    font-size: 0.166667rem;
+    background-color: @themoColor;
   }
 }
 </style>

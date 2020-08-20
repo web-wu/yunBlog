@@ -107,6 +107,7 @@ export default {
         margin: 0.020833rem;
         &:hover{
           cursor: pointer;
+          transform: scale(1.1);
         }
       }
     }

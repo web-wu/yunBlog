@@ -56,6 +56,11 @@ export default {}
       li{
         width: .520833rem;
         font-size: .416667rem;
+        a{
+          &:hover i{
+            color: aqua;
+          }
+        }
       }
     }
   }

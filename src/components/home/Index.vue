@@ -75,7 +75,7 @@ export default {
 .container {
   display: flex;
   width: 100%;
-  padding: .520833rem 3.447917rem 1.5625rem;
+  padding: .520833rem 3.447917rem;
   background-color: @bgColor;
   .content_left {
     width: 8.197917rem;

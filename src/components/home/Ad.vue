@@ -22,7 +22,7 @@ export default {
 @bg1Color: #008ddd;
 .ad{
   width: 100%;
-  height: 2.864583rem;
+  height: 3.385417rem;
   margin-top: 0.520833rem;
   border: 1px solid @themoColor;
   border-radius: 0.104167rem;

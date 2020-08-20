@@ -5,6 +5,9 @@ import Admin from '../components/Admin'
 import Index from '../components/home/Index'
 import Addblog from '../components/home/Addblog'
 import ArticleList from '../components/home/Articlelist'
+import Cooperation from '../components/home/Cooperation'
+import Advertising from '../components/home/Advertising'
+import Successfule from '../components/home/Successful'
 
 Vue.use(VueRouter)
 
@@ -23,7 +26,10 @@ const routes = [
           { path: '/articlelist', component: ArticleList }
         ]
       },
-      { path: '/addblog', component: Addblog }
+      { path: '/addblog', component: Addblog },
+      { path: '/cooperation', component: Cooperation },
+      { path: '/ad', component: Advertising },
+      { path: '/successful', component: Successfule }
     ]
   },
   {
