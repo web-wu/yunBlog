@@ -56,7 +56,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 0.833333rem;
+    height: 0.625rem;
     margin-top: 0.520833rem;
     border: 1px solid @themoColor;
     border-radius: 0.104167rem;
@@ -83,7 +83,7 @@ export default {
   }
   .notify {
     width: 100%;
-    height: 1.145833rem;
+    height: 1.354167rem;
     margin-top: 0.104167rem;
     border: 1px solid @themoColor;
     border-radius: 0.104167rem;

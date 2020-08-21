@@ -1,48 +1,53 @@
 <template>
   <div>
     <div class="articleList" v-for="item in 8" :key="item">
-    <div class="top">
-      <div class="image">
-        <img src="../../assets/images/avator.jpg" alt />
+      <div class="top">
+        <div class="image">
+          <img src="../../assets/images/avator.jpg" alt />
+        </div>
+        <div class="content">
+          <h3>健康你看你看你看你看你看你看你看呢</h3>
+          <p>了解了解了解了解了就来记录了解了解了解了解了就来记录了解了解了解了解了就来记录了解了解了解了解了就来记录了解了解了解了解了就来记录</p>
+          <div id="tag">
+            <el-tag
+              v-for="item in 4"
+              :key="item"
+              :type="tag_type[0]"
+              effect="dark"
+              size="mini"
+            >{{item}}</el-tag>
+          </div>
+        </div>
       </div>
-      <div class="content">
-        <h3>健康你看你看你看你看你看你看你看呢</h3>
-        <p>了解了解了解了解了就来记录了解了解了解了解了就来记录了解了解了解了解了就来记录了解了解了解了解了就来记录了解了解了解了解了就来记录</p>
-         <div id="tag">
-           <el-tag
-          v-for="item in 4"
-          :key="item"
-          :type="tag_type[0]"
-          effect="dark"
-          size="mini"
-        >
-        {{item}}
-        </el-tag>
-         </div>
+      <div class="bottom">
+        <div class="timer">
+          <span>
+            <i class="iconfont iconshijian"></i>2020-08-19
+          </span>
+          <span>
+            <i class="iconfont iconzuozhe"></i>web-wu
+          </span>
+        </div>
+        <div class="preview">
+          <span>
+            <i class="iconfont iconchakan-copy"></i>20
+          </span>
+          <span>
+            <i class="iconfont icondianzan_active"></i>50
+          </span>
+          <span>
+            <i class="iconfont iconpinglun"></i>52
+          </span>
+        </div>
       </div>
     </div>
-    <div class="bottom">
-      <div class="timer">
-        <span>
-          <i class="iconfont iconshijian"></i>2020-08-19
-        </span>
-        <span>
-          <i class="iconfont iconzuozhe"></i>web-wu
-        </span>
-      </div>
-      <div class="preview">
-        <span>
-          <i class="iconfont iconchakan-copy"></i>20
-        </span>
-        <span>
-          <i class="iconfont icondianzan_active"></i>50
-        </span>
-        <span>
-          <i class="iconfont iconpinglun"></i>52
-        </span>
-      </div>
+    <div class="paginatons">
+      <el-pagination
+        id="pageing"
+        layout="prev, pager, next"
+        :total="100">
+      </el-pagination>
     </div>
-  </div>
   </div>
 </template>
 
@@ -85,7 +90,7 @@ export default {
       width: 100%;
       height: 1.458333rem;
       margin-left: 0.208333rem;
-      &:hover{
+      &:hover {
         transform: scale(0.98);
         cursor: pointer;
       }
@@ -101,17 +106,17 @@ export default {
         word-break: break-all;
         text-indent: 2em;
       }
-      #tag{
+      #tag {
         display: flex;
         height: 0.208333rem;
         margin-top: 0.052083rem;
-        .el-tag{
-        margin: 0.03125rem;
-      }
+        .el-tag {
+          margin: 0.03125rem;
+        }
       }
     }
   }
-  .bottom{
+  .bottom {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -125,15 +130,21 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    span{
+    span {
       margin-left: 0.104167rem;
-      &:first-of-type{
+      &:first-of-type {
         margin: 0;
       }
-      i{
+      i {
         margin-right: 0.052083rem;
       }
     }
   }
+}
+.paginatons{
+  width: 100%;
+  height: 0.291667rem;
+  display: flex;
+  justify-content: center;
 }
 </style>

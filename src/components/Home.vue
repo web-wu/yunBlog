@@ -1,8 +1,10 @@
 <template>
   <div class="containner">
     <header>
-      <img src="../assets/images/logo.png" alt="">
-      <Navigator :nav="nav" :signIn="signIn" class="nav"></Navigator>
+      <nav>
+        <img src="../assets/images/logo.png" alt="">
+        <Navigator :nav="nav" :signIn="signIn" class="nav"></Navigator>
+      </nav>
     </header>
     <main>
       <router-view></router-view>
@@ -84,22 +86,28 @@ export default {
   height: 100%;
   header{
     height: .625rem;
-    padding: 0 3.447917rem;
+    // padding: 0 3.447917rem;
     font-size: .208333rem;
     background-color: @themoColor;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    img{
-      width: auto;
-      height: .520833rem;
-    }
-    .nav{
-      width: 5.208333rem;
+    nav{
+      display: flex;
+      height: 100%;
+      width: 11.979167rem;
+      margin: 0 auto;
+      justify-content: space-between;
+      align-items: center;
+      img{
+        width: auto;
+        height: .520833rem;
+      }
+      .nav{
+        width: 5.208333rem;
+      }
     }
   }
   main{
     width: 100%;
+    height: 100%;
     background-color: @bgColor;
   }
   footer{

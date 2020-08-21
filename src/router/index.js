@@ -8,6 +8,9 @@ import ArticleList from '../components/home/Articlelist'
 import Cooperation from '../components/home/Cooperation'
 import Advertising from '../components/home/Advertising'
 import Successfule from '../components/home/Successful'
+import Login from '../components/home/Login'
+import Register from '../components/home/Register'
+import PasswordBack from '../components/home/PasswordBack'
 
 Vue.use(VueRouter)
 
@@ -29,7 +32,10 @@ const routes = [
       { path: '/addblog', component: Addblog },
       { path: '/cooperation', component: Cooperation },
       { path: '/ad', component: Advertising },
-      { path: '/successful', component: Successfule }
+      { path: '/successful', component: Successfule },
+      { path: '/login', component: Login },
+      { path: '/register', component: Register },
+      { path: '/password', component: PasswordBack }
     ]
   },
   {

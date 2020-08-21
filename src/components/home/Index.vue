@@ -74,8 +74,9 @@ export default {
 @fontColor: #123456;
 .container {
   display: flex;
-  width: 100%;
-  padding: .520833rem 3.447917rem;
+  width: 11.979167rem;
+  margin: 0 auto;
+  padding: .520833rem 0;
   background-color: @bgColor;
   .content_left {
     width: 8.197917rem;

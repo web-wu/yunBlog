@@ -34,12 +34,12 @@ export default {}
 @themoColor: #007cdc;
 @bgColor: #019fde;
 .successful {
-  width: 100%;
+  width: 11.979167rem;
+  margin: 0 auto;
   min-height: 9.375rem;
-  padding: 0 3.447917rem;
   .el-breadcrumb{
     font-size: 0.166667rem;
-    padding: 0.208333rem;
+    padding: 0.208333rem 0;
   }
 }
 section{

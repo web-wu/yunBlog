@@ -4,6 +4,12 @@
   margin: 0;
   box-sizing: border-box;
   color: #03138c;
+  font-size: 0.166667rem;
+}
+html,body{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 ul,ol{
   list-style: none;
@@ -12,6 +18,8 @@ ul,ol{
 a{
   text-decoration: none;
 }
+
+@bgColor: #019fde;
 
 @media screen and (max-width: 1920px) {
   html{
@@ -25,14 +33,36 @@ a{
   }
 }
 
+@media screen and (max-width: 1120px) {
+  html{
+    font-size: 56px;
+  }
+}
+
 @media screen and (max-width: 992px) {
   html{
     font-size: 49.6px;
   }
 }
 
+@media screen and (max-width: 750px) {
+  html{
+    font-size: 37.5px;
+  }
+}
+
 @media screen and (max-width: 576px) {
   html{
     font-size: 28.8px;
+  }
+}
+
+#pageing{
+  margin-top: 0.208333rem;
+  font-size: 0.166667rem;
+  font-size: 0.166667rem;
+  button,li{
+    background-color: @bgColor;
+    height: 0.291667rem;
   }
 }
