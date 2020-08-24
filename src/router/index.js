@@ -4,13 +4,22 @@ import Home from '../components/Home'
 import Admin from '../components/Admin'
 import Index from '../components/home/Index'
 import Addblog from '../components/home/Addblog'
-import ArticleList from '../components/home/Articlelist'
+import ArticleList1 from '../components/home/Articlelist'
 import Cooperation from '../components/home/Cooperation'
 import Advertising from '../components/home/Advertising'
 import Successfule from '../components/home/Successful'
 import Login from '../components/home/Login'
 import Register from '../components/home/Register'
 import PasswordBack from '../components/home/PasswordBack'
+// 后台系统
+import Panel from '../components/admin/Panel'
+import UserInfo from '../components/admin/UserInfo'
+import User from '../components/admin/User'
+import ArticleList from '../components/admin/ArticleList'
+import AddArticle from '../components/admin/AddArticle'
+import Discuss from '../components/admin/Discuss'
+import Banner from '../components/admin/Banner'
+import Images from '../components/admin/Images'
 
 Vue.use(VueRouter)
 
@@ -24,9 +33,9 @@ const routes = [
       {
         path: '/index',
         component: Index,
-        redirect: '/articlelist',
+        redirect: '/articlelist1',
         children: [
-          { path: '/articlelist', component: ArticleList }
+          { path: '/articlelist1', component: ArticleList1 }
         ]
       },
       { path: '/addblog', component: Addblog },
@@ -39,7 +48,37 @@ const routes = [
     ]
   },
   {
-    path: '/admin', component: Admin
+    path: '/admin',
+    component: Admin,
+    children: [
+      {
+        path: '/admin', redirect: '/panel'
+      },
+      {
+        path: '/userinfo', component: UserInfo
+      },
+      {
+        path: '/panel', component: Panel
+      },
+      {
+        path: '/user', component: User
+      },
+      {
+        path: '/articleList', component: ArticleList
+      },
+      {
+        path: '/addArticle', component: AddArticle
+      },
+      {
+        path: '/discussList', component: Discuss
+      },
+      {
+        path: '/bannerList', component: Banner
+      },
+      {
+        path: '/imagesList', component: Images
+      }
+    ]
   }
 ]
 

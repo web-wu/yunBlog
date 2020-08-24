@@ -40,6 +40,7 @@ export default {
   border: 1px solid @themoColor;
   border-radius: 0.104167rem;
   background-color: @bg1Color;
+  overflow: hidden;
   .articleTitile{
     height: 0.333333rem;
     font-size: 0.208333rem;
@@ -49,7 +50,7 @@ export default {
     background-color: @themoColor;
   }
   .list_article{
-     ul{
+    ul{
       padding: 0.104167rem 0.208333rem;
       li{
         display: flex;

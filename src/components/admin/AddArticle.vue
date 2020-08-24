@@ -130,13 +130,13 @@ export default {
     overflow: hidden;
 }
 .el-breadcrumb{
-    margin-bottom: 20px;
+    margin-bottom: 0.208333rem;
 }
 .el-alert{
-    margin-bottom: 15px;
+    margin-bottom: 0.15625rem;
 }
 button{
-    margin-bottom: 50px;
+    margin-bottom: 0.520833rem;
 }
 #chatu_upload{
     display: none;

@@ -659,55 +659,55 @@ section{
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 0.208333rem;
     .panel_info{
         overflow: hidden;
-        width: 260px;
-        height: 110px;
-        padding: 20px;
+        width: 2.708333rem;
+        height: 1.145833rem;
+        padding: 0.208333rem;
         color: #01148c;
-        border-radius: 5px;
-        box-shadow: 0 0 2px antiquewhite;
+        border-radius: 0.052083rem;
+        box-shadow: 0 0 0.020833rem antiquewhite;
         background-color: rgba(255,255,255,0.7);
         .left{
             width: 32%;
-            height: 70px;
+            height: 0.729167rem;
             float: left;
             text-align: center;
-            line-height: 70px;
+            line-height: 0.729167rem;
             i{
-              font-size: 45px;
+              font-size: 0.46875rem;
             }
         }
         .right{
             width: 68%;
-            height: 70px;
+            height: 0.729167rem;
             float: left;
             text-align: center;
-            line-height: 70px;
+            line-height: 0.729167rem;
         }
     }
 }
 #line{
     width: 100%;
-    height: 300px;
+    height: 3.125rem;
     // border: 1px solid blue;
 }
 .echartBar{
   display: flex;
   width: 100%;
-  padding: 20px 20px;
+  padding: 0.208333rem 0.208333rem;
   color: #01148c;
   .echart{
     flex: 1;
-    padding: 0 10px;
+    padding: 0 0.104167rem;
     h3{
       text-align: center;
-      height: 50px;
-      line-height: 50px;
+      height: 0.520833rem;
+      line-height: 0.520833rem;
     }
     .bar{
-      height: 232px;
+      height: 2.416667rem;
     }
   }
 }

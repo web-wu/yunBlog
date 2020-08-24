@@ -47,14 +47,14 @@ export default {
 
 <style lang="less" scoped>
 .el-row{
-  margin: 50px;
+  margin: 0.520833rem;
 }
 .el-button{
-  margin: 9px
+  margin: 0.09375rem;
 }
 ul{
   li{
-    line-height: 30px;
+    line-height: 0.3125rem;
     color: #01148c;
   }
 }

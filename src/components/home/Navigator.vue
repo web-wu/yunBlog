@@ -65,6 +65,7 @@ ul{
       top: .625rem;
       background-color: @themoColor;
       width: 100%;
+      z-index: 100;
       li{
         padding: .052083rem;
         &:hover span{

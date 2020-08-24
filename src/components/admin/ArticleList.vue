@@ -157,13 +157,13 @@ export default {
 
 <style lang="less" scoped>
 .el-col{
-    margin: 20px 0;
+    margin: 0.208333rem 0;
 }
 .el-table{
-    border-radius: 5px;
+    border-radius: 0.052083rem;
     color: #01148c;
 }
 .el-pagination{
-    margin-top: 20px;
+    margin-top: 0.208333rem;
 }
 </style>
