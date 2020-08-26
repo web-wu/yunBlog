@@ -1,42 +1,42 @@
 <template>
   <div>
-    <div class="articleList" v-for="item in 8" :key="item">
+    <div class="articleList" v-for="(item, index) in articles" :key="index">
       <div class="top">
         <div class="image">
           <img src="../../assets/images/avator.jpg" alt />
         </div>
         <div class="content">
-          <h3>健康你看你看你看你看你看你看你看呢</h3>
-          <p>了解了解了解了解了就来记录了解了解了解了解了就来记录了解了解了解了解了就来记录了解了解了解了解了就来记录了解了解了解了解了就来记录</p>
+          <h3>{{item.title.substr(0,25)}}</h3>
+          <p>{{item.describe.substr(0, 80) + '...'}}</p>
           <div id="tag">
             <el-tag
-              v-for="item in 4"
-              :key="item"
-              :type="tag_type[0]"
+              v-for="(v,i) in item.tag"
+              :key="i"
+              :type="tag_type[i]"
               effect="dark"
               size="mini"
-            >{{item}}</el-tag>
+            >{{v}}</el-tag>
           </div>
         </div>
       </div>
       <div class="bottom">
         <div class="timer">
           <span>
-            <i class="iconfont iconshijian"></i>2020-08-19
+            <i class="iconfont iconshijian"></i>{{item.publicDate | dtformat()}}
           </span>
           <span>
-            <i class="iconfont iconzuozhe"></i>web-wu
+            <i class="iconfont iconzuozhe"></i>{{item.author}}
           </span>
         </div>
         <div class="preview">
           <span>
-            <i class="iconfont iconchakan-copy"></i>20
+            <i class="iconfont iconchakan-copy"></i>{{item.preview}}
           </span>
           <span>
-            <i class="iconfont icondianzan_active"></i>50
+            <i class="iconfont icondianzan_active"></i>{{item.like}}
           </span>
           <span>
-            <i class="iconfont iconpinglun"></i>52
+            <i class="iconfont iconpinglun"></i>{{item.comment}}
           </span>
         </div>
       </div>
@@ -45,7 +45,11 @@
       <el-pagination
         id="pageing"
         layout="prev, pager, next"
-        :total="100">
+        :total="query.total"
+        :page-size="query.size"
+        :pager-count="5"
+        :current-page="query.currentPage"
+        @current-change="pageChange">
       </el-pagination>
     </div>
   </div>
@@ -61,6 +65,64 @@ export default {
         2: 'warning',
         3: 'primary',
         4: 'info'
+      },
+      articles: [],
+      query: {
+        size: 8,
+        total: null,
+        currentPage: 1
+      },
+      switchNum: 1,
+      tagVal: null,
+      searchVal: null
+    }
+  },
+  mounted () {
+    this.getArticleList()
+    this.$bus.$on('tagsVal', val => {
+      this.tagVal = val
+      this.getTagArticles(val)
+    })
+    this.$bus.$on('searcher', searchValue => {
+      this.searchVal = searchValue
+      this.getSearchArticles(searchValue)
+    })
+  },
+  methods: {
+    async getArticleList () {
+      const { data } = await this.$http.get('/getHotArticle?page=' + this.query.currentPage)
+      this.articles = data.records
+      this.query.size = data.size
+      this.query.total = data.total
+      this.query.currentPage = data.page
+    },
+    async getTagArticles (val) {
+      const { data } = await this.$http.post('/tagSearch?page=' + this.query.currentPage, { tag: val })
+      this.articles = data.records
+      this.query.size = data.size
+      this.query.total = data.total
+      this.query.currentPage = data.page
+      this.switchNum = 3
+    },
+    async getSearchArticles (val) {
+      const { data } = await this.$http.post('/titleInfo?page=' + this.query.currentPage, { info: val })
+      this.articles = data.records
+      this.query.size = data.size
+      this.query.total = data.total
+      this.query.currentPage = data.page
+      this.switchNum = 2
+    },
+    pageChange (newPage) {
+      this.query.currentPage = newPage
+      switch (this.switchNum) {
+        case 2:
+          this.getSearchArticles(this.searchVal)
+          break
+        case 3:
+          this.getTagArticles(this.tagVal)
+          break
+        default:
+          this.getArticleList()
       }
     }
   }

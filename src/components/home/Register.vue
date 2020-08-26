@@ -13,17 +13,18 @@
             <el-input type="password" placeholder="请确认密码" v-model.trim="loginForm.checkpassword"></el-input>
           </el-form-item>
           <el-form-item prop="email" label="邮箱">
-            <el-input placeholder="请输入邮箱" v-model.trim="loginForm.email"></el-input>
+            <el-input placeholder="请输入邮箱" v-model.trim="loginForm.email" @blur="validateEmail"></el-input>
           </el-form-item>
           <el-form-item label="角色">
             <el-input readonly v-model="loginForm.role"></el-input>
             <input type="text" v-model="loginForm.status" hidden>
           </el-form-item>
           <el-form-item label="验证码">
-            <el-input placeholder="请输入验证码"></el-input>
+            <el-input placeholder="请输入验证码" v-model="loginForm.validateCode" style="width:1.5rem"></el-input>
+            <el-button>获取验证码</el-button>
           </el-form-item>
           <div id="btss">
-            <el-button type="success" @click.prevent="signIn">提交</el-button>
+            <el-button type="success" @click.prevent="register">提交</el-button>
             <el-button type="info" @click.prevent="resetData">重置</el-button>
           </div>
         </el-form>
@@ -54,13 +55,15 @@ export default {
       }
     }
     return {
+      emailFlog: false,
       loginForm: {
         username: '',
         email: '',
         role: 'normal',
         status: '1',
         password: '',
-        checkpassword: ''
+        checkpassword: '',
+        validateCode: ''
       },
       vaildRule: {
         username: [
@@ -83,7 +86,10 @@ export default {
     }
   },
   methods: {
-    signIn () {
+    register () {
+      if (!this.emailFlog) {
+        return false
+      }
       this.$refs.login_form.validate(valid => {
         if (!valid) {
           this.$message({
@@ -101,6 +107,22 @@ export default {
     },
     resetData () {
       this.$refs.login_form.resetFields()
+    },
+    async validateEmail () {
+      const { data } = await this.$http.post('/admin/validateEmail', this.loginForm.email)
+      if (data.status === 200) {
+        this.emailFlog = false
+        this.$message({
+          message: '此邮箱已经被注册，不可用',
+          type: 'error'
+        })
+      } else {
+        this.emailFlog = true
+        this.$message({
+          message: '此邮箱可用'
+        })
+      }
+      console.log(data)
     }
   }
 }

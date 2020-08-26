@@ -14,8 +14,8 @@
     <!-- 右边信息布局 -->
     <div class="content_right">
       <IdCard></IdCard>
-      <Search :tags="tags" @tagsVal="handlTagEcent" @searcher="clickSearch"></Search>
-      <Hotarticle></Hotarticle>
+      <Search :tags="tags"></Search>
+      <Hotarticle :hotArticle="hotArticle"></Hotarticle>
       <Ad></Ad>
       <FriendLink></FriendLink>
     </div>
@@ -41,12 +41,11 @@ export default {
         { type: 'warning', label: 'mongoDB' },
         { type: 'danger', label: '算法之美' },
         { type: 'success', label: 'mySQL' },
-        { type: '', label: 'JavaScript' },
+        { type: '', label: 'Javascript' },
         { type: 'info', label: '权限验证' },
         { type: 'warning', label: '项目部署' }
       ],
-      tagVal: null,
-      searchVal: null
+      hotArticle: []
     }
   },
   components: {
@@ -56,14 +55,9 @@ export default {
     Ad,
     FriendLink
   },
-  methods: {
-    handlTagEcent (val) {
-      this.tagVal = val
-    },
-    clickSearch (val) {
-      this.searchVal = val
-      console.log(val)
-    }
+  async created () {
+    const { data } = await this.$http.get('/getHotArticleList')
+    this.hotArticle = data
   }
 }
 </script>

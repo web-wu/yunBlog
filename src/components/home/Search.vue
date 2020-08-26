@@ -1,7 +1,7 @@
 <template>
   <div class="container1">
     <div class="search">
-      <input type="text" v-model="searchVal" placeholder="search..." />
+      <input type="text" v-model="searchVal" placeholder="search..." @keyup.enter="hanndleSearch" />
       <i class="iconfont iconsousuo" @click="hanndleSearch"></i>
     </div>
     <div class="notify">
@@ -32,11 +32,11 @@ export default {
   props: ['tags'],
   methods: {
     handleTag (val) {
-      this.$emit('tagsVal', val)
+      this.$bus.$emit('tagsVal', val)
     },
     hanndleSearch () {
       if (!this.searchVal) return false
-      this.$emit('searcher', this.searchVal)
+      this.$bus.$emit('searcher', this.searchVal)
     }
   }
 }

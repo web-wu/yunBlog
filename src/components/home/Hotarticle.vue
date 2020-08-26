@@ -3,18 +3,9 @@
     <div class="articleTitile">热门文章</div>
     <div class="list_article">
       <ul>
-        <li><span>8898888</span><span>2020-08-22</span></li>
-        <li><span>8898888</span><span>2020-08-22</span></li>
-        <li><span>8898888</span><span>2020-08-22</span></li>
-        <li><span>8898888</span><span>2020-08-22</span></li>
-        <li><span>8898888</span><span>2020-08-22</span></li>
-        <li><span>8898888</span><span>2020-08-22</span></li>
-        <li><span>8898888</span><span>2020-08-22</span></li>
-        <li><span>8898888</span><span>2020-08-22</span></li>
-        <li><span>8898888</span><span>2020-08-22</span></li>
-        <li><span>8898888</span><span>2020-08-22</span></li>
-        <li><span>8898888</span><span>2020-08-22</span></li>
-        <li><span>8898888</span><span>2020-08-22</span></li>
+        <li v-for="(item, index) in hotArticle" :key="index">
+          <span @click="goToDetail(item._id)">{{item.title.substr(0,15)}}</span><span>{{item.publicDate | dtformat()}}</span>
+        </li>
       </ul>
     </div>
   </div>
@@ -22,8 +13,11 @@
 
 <script>
 export default {
-  data () {
-    return {}
+  props: ['hotArticle'],
+  methods: {
+    goToDetail (id) {
+      this.$router.push()
+    }
   }
 }
 </script>
@@ -59,6 +53,11 @@ export default {
         width: 100%;
         span{
           font-size: 0.166667rem;
+            &:hover{
+              transform: scale(1.1);
+              cursor: pointer;
+              color: aqua;
+            }
         }
       }
     }

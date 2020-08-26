@@ -54,7 +54,6 @@ export default {
           this.$message.error('邮箱或密码错误!')
           return false
         }
-        // this.$cookie.setCookie(data.user, 1)
         this.$message.success('登录成功!')
         this.$router.push('/admin')
       })

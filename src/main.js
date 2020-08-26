@@ -11,7 +11,6 @@ import './assets/iconfont/iconfont.css'
 import echarts from 'echarts'
 
 Axios.defaults.baseURL = 'http://127.0.0.1'
-Axios.defaults.withCredentials = true
 Axios.interceptors.request.use(config => {
   return config
 })
@@ -20,6 +19,7 @@ Axios.interceptors.response.use(config => {
 })
 Vue.prototype.$http = Axios
 Vue.prototype.$echarts = echarts
+Vue.prototype.$bus = new Vue()
 Vue.config.productionTip = false
 Vue.filter('dateformat', function (val) {
   var dt = new Date(val)
