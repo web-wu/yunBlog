@@ -21,7 +21,7 @@
           </el-form-item>
           <el-form-item label="验证码">
             <el-input placeholder="请输入验证码" v-model="loginForm.validateCode" style="width:1.5rem"></el-input>
-            <el-button>获取验证码</el-button>
+            <el-button :disabled="loginForm.email.length > 6 ? false : true" @click="getValidateCode">获取验证码</el-button>
           </el-form-item>
           <div id="btss">
             <el-button type="success" @click.prevent="register">提交</el-button>
@@ -90,7 +90,7 @@ export default {
       if (!this.emailFlog) {
         return false
       }
-      this.$refs.login_form.validate(valid => {
+      this.$refs.login_form.validate(async valid => {
         if (!valid) {
           this.$message({
             message: '信息有误，请确认后再提交！',
@@ -98,18 +98,26 @@ export default {
           })
           return false
         }
-        this.$message({
-          message: '恭喜，注册成功！',
-          type: 'success'
-        })
-        this.$router.push('/login')
+        const { data } = await this.$http.post('/admin/addNewUser', this.loginForm)
+        if (data.status === 0) {
+          this.$message({
+            message: data.msg,
+            type: 'errror'
+          })
+        } else {
+          this.$message({
+            message: '恭喜，注册成功！',
+            type: 'success'
+          })
+          this.$router.push('/login')
+        }
       })
     },
     resetData () {
       this.$refs.login_form.resetFields()
     },
     async validateEmail () {
-      const { data } = await this.$http.post('/admin/validateEmail', this.loginForm.email)
+      const { data } = await this.$http.post('/admin/validateEmail', { email: this.loginForm.email })
       if (data.status === 200) {
         this.emailFlog = false
         this.$message({
@@ -123,6 +131,20 @@ export default {
         })
       }
       console.log(data)
+    },
+    async getValidateCode () {
+      const { data } = await this.$http.post('/admin/getValidateCode', { email: this.loginForm.email })
+      if (data.status === 1) {
+        this.$message({
+          message: data.msg,
+          type: 'success'
+        })
+      } else {
+        this.message({
+          message: data.msg,
+          type: 'error'
+        })
+      }
     }
   }
 }

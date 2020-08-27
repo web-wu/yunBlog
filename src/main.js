@@ -12,6 +12,7 @@ import echarts from 'echarts'
 
 Axios.defaults.baseURL = 'http://127.0.0.1'
 Axios.interceptors.request.use(config => {
+  config.headers.Authorization = `${localStorage.getItem('token')}`
   return config
 })
 Axios.interceptors.response.use(config => {

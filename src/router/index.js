@@ -11,6 +11,7 @@ import Successfule from '../components/home/Successful'
 import Login from '../components/home/Login'
 import Register from '../components/home/Register'
 import PasswordBack from '../components/home/PasswordBack'
+import ArticleDetail from '../components/home/ArticleDetail'
 // 后台系统
 import Panel from '../components/admin/Panel'
 import UserInfo from '../components/admin/UserInfo'
@@ -44,7 +45,8 @@ const routes = [
       { path: '/successful', component: Successfule },
       { path: '/login', component: Login },
       { path: '/register', component: Register },
-      { path: '/password', component: PasswordBack }
+      { path: '/password', component: PasswordBack },
+      { path: '/articleDetail', component: ArticleDetail }
     ]
   },
   {
