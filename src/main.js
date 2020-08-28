@@ -2,26 +2,20 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import Axios from 'axios'
-// import './assets/plugin/element'
+import axios from './assets/axios/axios'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 import './assets/plugin/ele'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/globle.css'
 import './assets/iconfont/iconfont.css'
 import echarts from 'echarts'
 
-Axios.defaults.baseURL = 'http://127.0.0.1'
-Axios.interceptors.request.use(config => {
-  config.headers.Authorization = `${localStorage.getItem('token')}`
-  return config
-})
-Axios.interceptors.response.use(config => {
-  return config
-})
-Vue.prototype.$http = Axios
+Vue.prototype.$http = axios
 Vue.prototype.$echarts = echarts
 Vue.prototype.$bus = new Vue()
 Vue.config.productionTip = false
+Vue.use(mavonEditor)
 Vue.filter('dateformat', function (val) {
   var dt = new Date(val)
   var y = dt.getFullYear()

@@ -24,7 +24,15 @@
                 <el-input v-model="articleDate.describe" placeholder="请输入文章描述"></el-input>
             </el-form-item>
             <el-form-item label="内容:">
-                <input type="text" hidden name="thumb" value="editorOption.thumb">
+                <mavon-editor
+                v-model="content"
+                ref="md"
+                @change="md_change"
+                @imgAdd="imgAdd"
+                style="min-height: 3rem"
+                >
+                </mavon-editor>
+                <input type="text" hidden name="thumb" value="articleDate.thumb">
             </el-form-item>
             <el-button type="primary" @click="addArticle">确认添加</el-button>
         </el-form>
@@ -35,6 +43,7 @@
 export default {
   data () {
     return {
+      content: '',
       articleDate: {
         title: '',
         author: '',
@@ -67,7 +76,17 @@ export default {
       const { data } = await this.$http.post('/admin/addArticle', this.articleDate)
       if (data.msg !== 200) return this.$messags.error('添加文章失败!')
       this.$message.success('添加文章成功!')
-      this.$router.push('/articleList')
+      this.$router.push('/')
+    },
+    md_change (value, render) {
+      this.articleDate.content = render
+    },
+    async imgAdd (pos, $file) {
+      const formDate = new FormData()
+      formDate.append('img', $file)
+      const { data } = await this.$http.post('/admin/uploadImg', formDate)
+      this.$refs.md.$img2Url(pos, data)
+      console.log(data)
     }
   }
 }

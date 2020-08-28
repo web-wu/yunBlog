@@ -6,11 +6,8 @@
           <el-form-item prop="email">
             <el-input placeholder="请输入邮箱" v-model.trim="loginForm.email"></el-input>
           </el-form-item>
-          <el-form-item prop="username">
-            <el-input placeholder="请输入用户名" v-model.trim="loginForm.username"></el-input>
-          </el-form-item>
           <div class="btn">
-            <el-button type="success" @click.prevent="signIn">提交</el-button>
+            <el-button type="success" @click.prevent="findPassword">提交</el-button>
           <el-button type="info" @click.prevent="resetData">重置</el-button>
           </div>
         </el-form>
@@ -23,8 +20,7 @@ export default {
   data () {
     return {
       loginForm: {
-        email: '',
-        username: ''
+        email: ''
       },
       vaildRule: {
         email: [
@@ -38,23 +34,23 @@ export default {
     }
   },
   methods: {
-    signIn () {
-      this.$refs.login_form.validate(valid => {
+    findPassword () {
+      this.$refs.login_form.validate(async valid => {
         if (!valid) {
           this.$message({
-            message: '邮箱或用户名错误！',
+            message: '邮箱错误！',
             type: 'error'
           })
           return false
         }
-        // 再次发送axios请求
-        this.$message({
-          message: '发送成功！,请注意查收邮箱。',
-          type: 'success'
-        })
-        setTimeout(function () {
-          this.$router.push('/')
-        }, 5000)
+        const { data } = await this.$http.post('/admin/findBackPassword', this.loginForm)
+        if (data.status === 1) {
+          this.$message({
+            message: '发送成功！,请注意查收邮箱。',
+            type: 'success'
+          })
+          this.$router.push('/login')
+        }
       })
     },
     resetData () {

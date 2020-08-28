@@ -11,7 +11,7 @@
         </li>
         <li>
           <img src="../assets/images/login.png" alt />
-          <span>{{user.username}}</span>
+          <span>{{$store.state.username}}</span>
           <ol>
             <li>
               <router-link to="/userinfo">个人中心</router-link>
@@ -74,10 +74,8 @@ export default {
       this.muneList = data
     },
     handleLogout () {
-      // this.$cookie.clearCookie('conncetId')
-      // this.$cookie.clearCookie('email')
-      // this.$cookie.clearCookie('password')
-      // this.$router.push('/login')
+      localStorage.removeItem('token')
+      this.$router.push('/login')
     }
   }
 }

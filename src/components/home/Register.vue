@@ -105,6 +105,7 @@ export default {
             type: 'errror'
           })
         } else {
+          console.log(data)
           this.$message({
             message: '恭喜，注册成功！',
             type: 'success'
@@ -130,7 +131,6 @@ export default {
           message: '此邮箱可用'
         })
       }
-      console.log(data)
     },
     async getValidateCode () {
       const { data } = await this.$http.post('/admin/getValidateCode', { email: this.loginForm.email })
@@ -140,7 +140,7 @@ export default {
           type: 'success'
         })
       } else {
-        this.message({
+        this.$message({
           message: data.msg,
           type: 'error'
         })

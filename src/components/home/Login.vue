@@ -49,13 +49,14 @@ export default {
           this.$message.error('邮箱或密码错误!')
           return false
         }
-        const { data } = await this.$http.post('/admin/login', this.loginForm)
-        if (data.msg !== 200) {
+        const data = await this.$store.dispatch('login_sign_async', this.loginForm)
+        if (data.status === 1) {
+          this.$message.success('登录成功!')
+          this.$router.push('/admin')
+        } else {
           this.$message.error('邮箱或密码错误!')
           return false
         }
-        this.$message.success('登录成功!')
-        this.$router.push('/admin')
       })
     },
     resetData () {

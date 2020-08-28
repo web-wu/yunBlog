@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Store from '../store/index'
 import VueRouter from 'vue-router'
 import Home from '../components/Home'
 import Admin from '../components/Admin'
@@ -39,7 +40,7 @@ const routes = [
           { path: '/articlelist1', component: ArticleList1 }
         ]
       },
-      { path: '/addblog', component: Addblog },
+      { path: '/addblog', component: Addblog, meta: { needLogin: true } },
       { path: '/cooperation', component: Cooperation },
       { path: '/ad', component: Advertising },
       { path: '/successful', component: Successfule },
@@ -52,6 +53,7 @@ const routes = [
   {
     path: '/admin',
     component: Admin,
+    meta: { needLogin: true },
     children: [
       {
         path: '/admin', redirect: '/panel'
@@ -87,6 +89,24 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   routes
+})
+
+router.beforeEach(async (to, from, next) => {
+  const isLogin = await Store.dispatch('validate_login')
+  if (isLogin) {
+    if (to.path === '/login') {
+      next('/admin')
+    } else {
+      next()
+    }
+  } else {
+    const flog = to.matched.some(item => item.meta.needLogin)
+    if (flog) {
+      next('/login')
+    } else {
+      next()
+    }
+  }
 })
 
 export default router
