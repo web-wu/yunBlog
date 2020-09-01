@@ -52,7 +52,7 @@ export default {
         status: '1',
         keyword: '',
         describe: '',
-        thumb: ''
+        thumb: []
       },
       tagList: [
         { type: '', label: 'express' },
@@ -78,15 +78,16 @@ export default {
       this.$message.success('添加文章成功!')
       this.$router.push('/')
     },
-    md_change (value, render) {
+    md_change (content, render) {
       this.articleDate.content = render
     },
     async imgAdd (pos, $file) {
       const formDate = new FormData()
       formDate.append('img', $file)
-      const { data } = await this.$http.post('/admin/uploadImg', formDate)
+      let { data } = await this.$http.post('/admin/uploadImg', formDate)
+      this.articleDate.thumb.push(data)
+      data = 'http://localhost/' + data
       this.$refs.md.$img2Url(pos, data)
-      console.log(data)
     }
   }
 }

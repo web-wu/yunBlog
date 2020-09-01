@@ -5,7 +5,7 @@
         <div class="image">
           <img src="../../assets/images/avator.jpg" alt />
         </div>
-        <div class="content">
+        <div class="content" @click="jumpping_articleDetail(item._id)">
           <h3>{{item.title.substr(0,25)}}</h3>
           <p>{{item.describe.substr(0, 80) + '...'}}</p>
           <div id="tag">
@@ -124,6 +124,9 @@ export default {
         default:
           this.getArticleList()
       }
+    },
+    jumpping_articleDetail (id) {
+      this.$router.push(`/articleDetail/${id}`)
     }
   }
 }

@@ -16,7 +16,7 @@ export default {
   props: ['hotArticle'],
   methods: {
     goToDetail (id) {
-      this.$router.push()
+      this.$router.push(`/articleDetail/${id}`)
     }
   }
 }

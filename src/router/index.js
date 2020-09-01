@@ -47,7 +47,7 @@ const routes = [
       { path: '/login', component: Login },
       { path: '/register', component: Register },
       { path: '/password', component: PasswordBack },
-      { path: '/articleDetail', component: ArticleDetail }
+      { path: '/articleDetail/:id', component: ArticleDetail }
     ]
   },
   {
