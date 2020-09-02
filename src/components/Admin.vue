@@ -141,7 +141,7 @@ export default {
 }
 .el-aside{
   background-color: #007cdc;
-  min-height: 8.25rem
+  min-height: 9.375rem
 }
 .el-menu{
   border-right: 1px solid #409EFF;

@@ -16,7 +16,6 @@
             <el-table-column label="图片" prop="img_url">
                 <template slot-scope="scope">
                     <div class="block">
-                        <span class="demonstration">轮播图</span>
                         <el-image :src="scope.row.img_url">
                         <div slot="placeholder" class="image-slot">
                             加载中<span class="dot">...</span>
@@ -97,7 +96,7 @@ export default {
       this.getbannerList()
     },
     uploadImg (response) {
-      this.addBanner.img_url = response
+      this.addBanner.img_url = 'http://localhost/' + response
     },
     async getbannerList () {
       const { data } = await this.$http.get('/admin/getBannerList')

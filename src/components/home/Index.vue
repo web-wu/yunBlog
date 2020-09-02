@@ -2,8 +2,8 @@
   <div class="container">
     <div class="content_left">
       <el-carousel trigger="click" height="2.083333rem">
-        <el-carousel-item v-for="item in 5" :key="item">
-          <h3 class="small">{{ item }}</h3>
+        <el-carousel-item v-for="(item,index) in bannerLiset" :key="index">
+          <img :src="item.img_url" alt="">
         </el-carousel-item>
       </el-carousel>
       <!-- 文章列表 -->
@@ -45,7 +45,8 @@ export default {
         { type: 'info', label: '权限验证' },
         { type: 'warning', label: '项目部署' }
       ],
-      hotArticle: []
+      hotArticle: [],
+      bannerLiset: []
     }
   },
   components: {
@@ -58,6 +59,14 @@ export default {
   async created () {
     const { data } = await this.$http.get('/getHotArticleList')
     this.hotArticle = data
+    this.getBanner()
+  },
+  methods: {
+    async getBanner () {
+      const { data } = await this.$http.get('/admin/getBannerList')
+      this.bannerLiset = data
+      console.log(data)
+    }
   }
 }
 </script>
@@ -78,6 +87,12 @@ export default {
   .content_right {
     width: 4.583333rem;
     margin-left: 0.3125rem;
+  }
+}
+.el-carousel{
+  img{
+    width: 7.489583rem;
+    height: 2.083333rem;
   }
 }
 </style>

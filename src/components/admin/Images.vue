@@ -14,7 +14,17 @@
                     {{scope.row.createDate | dateformat}}
                 </template>
             </el-table-column>
-            <el-table-column label="图片地址" prop="img_url"></el-table-column>
+            <el-table-column label="图片地址" prop="img_url">
+              <template slot-scope="scope">
+                  <div class="block">
+                      <el-image :src="scope.row.img_url">
+                      <div slot="placeholder" class="image-slot">
+                          加载中<span class="dot">...</span>
+                      </div>
+                      </el-image>
+                  </div>
+              </template>
+            </el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
                     <el-button type="danger" icon="el-icon-delete" circle @click="userDelete_btn(scope.row._id)"></el-button>
@@ -54,11 +64,7 @@
 export default {
   data () {
     return {
-      imagesData: [{
-        classify: '广告',
-        img_url: '',
-        createDate: '2020-6-22'
-      }],
+      imagesData: [],
       addImage: {
         classify: '',
         img_url: ''
@@ -88,7 +94,7 @@ export default {
       this.getbannerList()
     },
     uploadImg (response) {
-      this.addImage.img_url = response
+      this.addImage.img_url = 'http://localhost/' + response
     },
     async getbannerList () {
       const { data } = await this.$http.get('/admin/getBannerList')

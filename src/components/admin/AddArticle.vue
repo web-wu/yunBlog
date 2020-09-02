@@ -16,7 +16,7 @@
             </el-form-item>
             <el-form-item label="标签:">
                 <el-checkbox-group v-model="articleDate.tag">
-                    <el-checkbox :label="v" border size="mini" v-for="(v, i) in tagList" :key="i"></el-checkbox>
+                    <el-checkbox :label="v.label" border size="mini" v-for="(v, i) in tagList" :key="i"></el-checkbox>
                 </el-checkbox-group>
             </el-form-item>
             <el-form-item label="关键字:">
@@ -26,17 +26,15 @@
                 <el-input v-model="articleDate.describe" placeholder="请输入文章描述"></el-input>
             </el-form-item>
             <el-form-item label="内容:">
-                <quill-editor v-model="articleDate.content" :options="editorOption" ref="quillEditor"></quill-editor>
-                <el-upload
-                    id="chatu_upload"
-                    name="img"
-                    action="http://127.0.0.1/admin/uploadImg"
-                    list-type="picture"
-                    :on-success="handleUploadSuccess"
-                    >
-                    <el-button size="small" type="primary" id="chatu_btn">点击上传</el-button>
-                </el-upload>
-                <input type="text" hidden name="thumb" value="editorOption.thumb">
+              <mavon-editor
+                v-model="content"
+                ref="md"
+                @change="md_change"
+                @imgAdd="imgAdd"
+                style="min-height: 3rem"
+              >
+              </mavon-editor>
+              <input type="text" hidden v-model="articleDate.thumb">
             </el-form-item>
             <el-button type="primary" @click="addArticle">确认添加</el-button>
         </el-form>
@@ -44,45 +42,10 @@
 </template>
 
 <script>
-const toolbarOptions = [
-  ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-  ['blockquote', 'code-block'],
-
-  [{ header: 1 }, { header: 2 }], // custom button values
-  [{ list: 'ordered' }, { list: 'bullet' }],
-  [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
-  [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
-  [{ direction: 'rtl' }], // text direction
-
-  [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-  [{ font: [] }],
-  [{ align: [] }],
-  ['link', 'image', 'video'],
-  ['clean'] // remove formatting button
-]
 export default {
   data () {
     return {
-    // 配置富文本图片调用element-ui图片上传组件按钮  上传图片
-      editorOption: {
-        modules: {
-          toolbar: {
-            container: toolbarOptions, // 工具栏
-            handlers: {
-              image: function (value) {
-                if (value) {
-                  document.getElementById('chatu_btn').click()
-                } else {
-                  this.quill.format('image', false)
-                }
-              }
-            }
-          }
-        }
-      },
+      content: '',
       articleDate: {
         title: '',
         author: '',
@@ -91,35 +54,42 @@ export default {
         status: '1',
         keyword: '',
         describe: '',
-        thumb: ''
+        thumb: []
       },
-      tagList: ['vueRouter', 'vue', 'javascript', 'ajax', 'nodejs', 'mySql', 'mongoDB', 'vuex', 'react', 'jQuery', 'php', '登录/注册']
+      tagList: [
+        { type: '', label: 'express' },
+        { type: 'success', label: 'vue' },
+        { type: 'warning', label: 'CSS' },
+        { type: 'info', label: 'react' },
+        { type: 'danger', label: 'nodejs' },
+        { type: '', label: 'Jquery' },
+        { type: 'warning', label: 'mongoDB' },
+        { type: 'danger', label: '算法之美' },
+        { type: 'success', label: 'mySQL' },
+        { type: '', label: 'Javascript' },
+        { type: 'info', label: '权限验证' },
+        { type: 'warning', label: '项目部署' }
+      ]
     }
   },
   methods: {
     async addArticle () {
-      if (this.articleDate.content.length === 0) return this.$message.error('请输入文章内容!')
+      if (this.articleDate.content.length === 0 || this.articleDate.length === 0) return this.$message.error('请输入文章内容!')
       const { data } = await this.$http.post('/admin/addArticle', this.articleDate)
       if (data.msg !== 200) return this.$messags.error('添加文章失败!')
       this.$message.success('添加文章成功!')
       this.$router.push('/articleList')
     },
-    handleUploadSuccess (res) {
-      console.log(res)
-      // 获取富文本组件实例
-      const quill = this.$refs.QuillEditor.quill
-      // 如果上传成功
-      if (res) {
-        // 获取光标所在位置
-        const length = quill.getSelection().index
-        // 插入图片，res为服务器返回的图片链接地址
-        quill.insertEmbed(length, 'image', res)
-        // 调整光标到最后
-        quill.setSelection(length + 1)
-      } else {
-        // 提示信息，需引入Message
-        this.$message.error('图片插入失败')
-      }
+    md_change (content, render) {
+      this.articleDate.content = render
+    },
+    async imgAdd (pos, $file) {
+      const formDate = new FormData()
+      formDate.append('img', $file)
+      let { data } = await this.$http.post('/admin/uploadImg', formDate)
+      this.articleDate.thumb.push(data)
+      data = 'http://localhost/' + data
+      this.$refs.md.$img2Url(pos, data)
     }
   }
 }

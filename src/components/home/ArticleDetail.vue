@@ -15,7 +15,7 @@
           </p>
           <hr />
           <h5>摘要:{{article.describe}}</h5>
-          <article v-html="article.content"></article>
+          <article id="article_detail" v-html="article.content"></article>
           <div class="share">
             <span>文章分享:</span>
             <i class="iconfont iconweixingongzhonghao"></i>
@@ -24,9 +24,9 @@
           </div>
           <div class="comment">
             <div class="input_user">
-              <el-form  label-width="1rem" size="mini" :model="formComment" class="demo-form-inline">
-                <el-form-item label="发表评论:">
-                  <el-input v-model="formComment.comment" @focus="validate_signIn"></el-input>
+              <el-form size="mini" :model="formComment" class="demo-form-inline">
+                <el-form-item>
+                  <el-input placeholder="在这发表您的看法吧" v-model="formComment.comment" @focus="validate_signIn"></el-input>
                 </el-form-item>
                 <el-form-item>
                   <el-button size="mini" type="primary" @click="onSubmit">提交</el-button>
@@ -115,13 +115,13 @@ export default {
       padding: 0.208333rem 0;
     }
     .share {
-      height: 1.041667rem;
+      height: 2.083333rem;
       display: flex;
       justify-content: center;
       align-items: center;
       i {
         font-size: 0.25rem;
-        margin-left: 0.208333rem;
+        margin-left: 0.520833rem;
         &:hover {
           cursor: pointer;
           color: aqua;
@@ -131,14 +131,14 @@ export default {
     .comment{
       .el-form{
         .el-form-item{
-          margin-right: 0.833333rem;
+          margin: 0.104167rem 0.520833rem;
         }
       }
       .commentList{
         li{
-          margin-left: 0.9375rem;
+          margin-left: 0.520833rem;
           p{
-            padding: 0.104167rem 0.208333rem;
+            padding: 0.208333rem 4em;
           }
         }
       }

@@ -48,18 +48,7 @@
                 </el-form-item>
                 <el-form-item label="标签:">
                     <el-checkbox-group v-model="articleDate_modify.tag">
-                        <el-checkbox label="HTML" border size="mini"></el-checkbox>
-                        <el-checkbox label="CSS" border size="mini"></el-checkbox>
-                        <el-checkbox label="javascript" border size="mini"></el-checkbox>
-                        <el-checkbox label="jQuery" border size="mini"></el-checkbox>
-                        <el-checkbox label="ajax" border size="mini"></el-checkbox>
-                        <el-checkbox label="nodejs" border size="mini"></el-checkbox>
-                        <el-checkbox label="vue" border size="mini"></el-checkbox>
-                        <el-checkbox label="react" border size="mini"></el-checkbox>
-                        <el-checkbox label="uniapp" border size="mini"></el-checkbox>
-                        <el-checkbox label="mongoDB" border size="mini"></el-checkbox>
-                        <el-checkbox label="mySql" border size="mini"></el-checkbox>
-                        <el-checkbox label="登录/注册" border size="mini"></el-checkbox>
+                        <el-checkbox :label="v.label" border size="mini" v-for="(v, i) in tagList" :key="i"></el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
                 <el-form-item label="关键字:">
@@ -69,7 +58,15 @@
                     <el-input v-model="articleDate_modify.describe" placeholder="请输入文章描述"></el-input>
                 </el-form-item>
                 <el-form-item label="内容:">
-                    <quill-editor name="modifyEditor" ref="myQuillEditor" v-model="articleDate_modify.content" :options="editorOption"></quill-editor>
+                  <mavon-editor
+                    v-model="content"
+                    ref="md"
+                    @change="md_change"
+                    @imgAdd="imgAdd"
+                    style="min-height: 3rem"
+                  >
+                  </mavon-editor>
+                  <input type="text" hidden v-model="articleDate_modify.thumb">
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -93,6 +90,7 @@ export default {
         size: 5,
         total: null
       },
+      content: '',
       articleDate_modify: {
         title: '',
         author: '',
@@ -101,8 +99,22 @@ export default {
         status: '1',
         keyword: '',
         describe: '',
-        thumb: ''
-      }
+        thumb: []
+      },
+      tagList: [
+        { type: '', label: 'express' },
+        { type: 'success', label: 'vue' },
+        { type: 'warning', label: 'CSS' },
+        { type: 'info', label: 'react' },
+        { type: 'danger', label: 'nodejs' },
+        { type: '', label: 'Jquery' },
+        { type: 'warning', label: 'mongoDB' },
+        { type: 'danger', label: '算法之美' },
+        { type: 'success', label: 'mySQL' },
+        { type: '', label: 'Javascript' },
+        { type: 'info', label: '权限验证' },
+        { type: 'warning', label: '项目部署' }
+      ]
     }
   },
   created () {
@@ -110,6 +122,7 @@ export default {
   },
   methods: {
     articleEdit_btn (info) {
+      console.log(info)
       this.articleDate_modify = info
       this.articleshow = true
     },
@@ -150,6 +163,17 @@ export default {
     pageChange (newPage) {
       this.query.page = newPage
       this.getArticleList()
+    },
+    md_change (content, render) {
+      this.articleDate_modify.content = render
+    },
+    async imgAdd (pos, $file) {
+      const formDate = new FormData()
+      formDate.append('img', $file)
+      let { data } = await this.$http.post('/admin/uploadImg', formDate)
+      this.articleDate.thumb.push(data)
+      data = 'http://localhost/' + data
+      this.$refs.md.$img2Url(pos, data)
     }
   }
 }
