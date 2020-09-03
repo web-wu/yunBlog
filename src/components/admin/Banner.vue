@@ -124,4 +124,7 @@ export default {
 .el-pagination{
     margin-top: 0.208333rem;
 }
+.el-image{
+  max-width: 1.041667rem;
+}
 </style>

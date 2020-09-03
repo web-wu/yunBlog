@@ -3,7 +3,7 @@
     <div class="articleList" v-for="(item, index) in articles" :key="index">
       <div class="top">
         <div class="image">
-          <img src="../../assets/images/avator.jpg" alt />
+          <img :src="`http://localhost/${item.thumb[0]}`" alt />
         </div>
         <div class="content" @click="jumpping_articleDetail(item._id)">
           <h3>{{item.title.substr(0,25)}}</h3>
@@ -33,7 +33,7 @@
             <i class="iconfont iconchakan-copy"></i>{{item.preview}}
           </span>
           <span>
-            <i class="iconfont icondianzan_active"></i>{{item.like}}
+            <i class="iconfont icondianzan_active" @click="goodJob(item)"></i>{{item.like}}
           </span>
           <span>
             <i class="iconfont iconpinglun"></i>{{item.comment}}
@@ -127,6 +127,27 @@ export default {
     },
     jumpping_articleDetail (id) {
       this.$router.push(`/articleDetail/${id}`)
+    },
+    async goodJob (item) {
+      const isLogin = await this.$store.dispatch('validate_login')
+      if (!isLogin) {
+        this.$message.info('请先登录才能点赞！！！')
+        return false
+      }
+      let number = item.like
+      if (!!number === false) {
+        number = 1
+      } else {
+        number++
+      }
+      const { data } = await this.$http.put('/articleNumberChange', {
+        id: item._id,
+        num: 2,
+        number: number,
+        username: this.$store.state.username
+      })
+      if (data.msg !== 200) return false
+      this.getArticleList()
     }
   }
 }
@@ -150,6 +171,7 @@ export default {
     display: flex;
     img {
       width: 1.5625rem;
+      height: 1.041667rem;
     }
     .content {
       width: 100%;
@@ -202,6 +224,9 @@ export default {
       }
       i {
         margin-right: 0.052083rem;
+      }
+      .icondianzan_active:hover{
+        cursor: pointer;
       }
     }
   }

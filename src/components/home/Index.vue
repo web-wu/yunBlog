@@ -65,7 +65,6 @@ export default {
     async getBanner () {
       const { data } = await this.$http.get('/admin/getBannerList')
       this.bannerLiset = data
-      console.log(data)
     }
   }
 }

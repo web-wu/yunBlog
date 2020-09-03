@@ -59,11 +59,8 @@ export default {
       }
     }
   },
-  async mounted() {
-    const { data } = await this.$http.post('/getArticleDetail', {
-      id: this.$route.params.id
-    })
-    this.article = data
+  mounted() {
+    this.getArticleDetail()
   },
   methods: {
     async validate_signIn () {
@@ -75,6 +72,19 @@ export default {
     },
     onSubmit () {
       this.publicComment = this.formComment.comment
+    },
+    async getArticleDetail () {
+      const { data } = await this.$http.post('/getArticleDetail', {
+        id: this.$route.params.id
+      })
+      let number = data.preview
+      if (!!number === false) {
+        number = 1
+      } else {
+        number++
+      }
+      await this.$http.put('/articleNumberChange', { id: this.$route.params.id, num: 1, number: number })
+      this.article = data
     }
   }
 }
