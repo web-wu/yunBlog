@@ -40,9 +40,27 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div
-          class="grid-content bg-purple right_con"
-        >222222 llllll llllll llllll llllll llllll llllll llllll llllll llllll llllll llllll llllll</div>
+        <div class="grid-content bg-purple right_con">
+          <div class="aboutAuthor">
+            <div class="avator">
+              <img src="../../assets/images/login.png" alt="">
+            </div>
+            <div class="info_author">
+              <h3>web-wu</h3>
+              <p>文章: <span>122222</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="otherArticle">
+          <h3>作者的其他文章推介:</h3>
+          <ul>
+            <li>ljkljjkjjjjljjljjljl</li>
+            <li>ljkljjkjjjjljjljjljl</li>
+          </ul>
+        </div>
+        <div class="ad_site">
+          jskkk
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -130,7 +148,7 @@ export default {
       justify-content: center;
       align-items: center;
       i {
-        font-size: 0.25rem;
+        font-size: 0.333333rem;
         margin-left: 0.520833rem;
         &:hover {
           cursor: pointer;
@@ -154,5 +172,46 @@ export default {
       }
     }
   }
+  .aboutAuthor{
+    padding: 0 0.104167rem;
+    display: flex;
+    align-items: center;
+    .avator{
+      margin-right: 0.208333rem;
+      img{
+        width: 0.5rem;
+        height: 0.5rem;
+      }
+    }
+    .info_author{
+      p{
+        padding: 0;
+        line-height: 0.333333rem;
+      }
+    }
+  }
+  .otherArticle{
+    margin-top: 0.208333rem;
+    padding: 0.208333rem 0.104167rem;
+    border: 1px solid @themoColor;
+    border-radius: 0.104167rem;
+    background-color: @bg1Color;
+    ul{
+      padding: 0.104167rem 0;
+      li{
+        padding-left: 1em;
+        line-height: 0.270833rem;
+        font-size: 0.145833rem;
+      }
+    }
+  }
+  .ad_site{
+    margin-top: 0.208333rem;
+    padding: 0.208333rem 0.104167rem;
+    border: 1px solid @themoColor;
+    border-radius: 0.104167rem;
+    background-color: @bg1Color;
+  }
 }
+
 </style>

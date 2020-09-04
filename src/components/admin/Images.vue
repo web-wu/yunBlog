@@ -35,6 +35,7 @@
                 </template>
             </el-table-column>
         </el-table>
+         <el-pagination background layout="prev, pager, next" :current-page="query.page" :page-size="query.size" :total="query.total" @current-change="pageChange"></el-pagination>
 
         <!-- 添加banner对话框 -->
         <el-dialog title="添加图片" :visible.sync="userEdit" width="50%">
@@ -72,6 +73,11 @@ export default {
         classify: '',
         img_url: ''
       },
+      query: {
+        page: 1,
+        size: 5,
+        total: null
+      },
       userEdit: false
     }
   },
@@ -100,14 +106,21 @@ export default {
       this.addImage.img_url = 'http://localhost/' + response
     },
     async get_ad_case_img () {
-      const { data } = await this.$http.get('/admin/get_ad_case_img')
-      this.imagesData = data
+      const { data } = await this.$http.get('/admin/get_ad_case_img?page=' + this.query.page)
+      this.imagesData = data.records
+      this.query.page = data.page
+      this.query.size = data.size
+      this.query.total = data.total
     },
     async add_img_ad_case () {
       this.userEdit = false
       const { data } = await this.$http.post('/admin/add_AD_Case_img', this.addImage)
       if (data.status !== 1) return this.$message.error('添加图片失败!')
       this.$message.success('添加轮片成功!')
+      this.get_ad_case_img()
+    },
+    pageChange (newPage) {
+      this.query.page = newPage
       this.get_ad_case_img()
     }
   }

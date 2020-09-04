@@ -22,21 +22,21 @@
               <i class="iconfont iconguanggao"></i>
               <div class="describe">
                 <h3>首页banner</h3>
-                <img src="" alt="">
+                <img :src="img_list[0].img_url" alt="">
               </div>
             </li>
             <li>
               <i class="iconfont iconpinpaiwangzhandingzhi"></i>
               <div class="describe">
                 <h3>首页侧边栏</h3>
-                <img src="" alt="">
+                <img :src="img_list[1].img_url" alt="">
               </div>
             </li>
             <li>
               <i class="iconfont iconwangzhandingzhi"></i>
               <div class="describe">
                 <h3>详情页侧边栏</h3>
-                <img src="" alt="">
+                <img :src="img_list[2].img_url" alt="">
               </div>
             </li>
           </ul>
@@ -46,7 +46,17 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      img_list: []
+    }
+  },
+  async created () {
+    const { data } = await this.$http.post('/get_ad_case', { num: 1, claasify: 1 })
+    this.img_list = data
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -119,7 +129,8 @@ section{
         width: 2.604167rem;
         word-wrap: break-word;
         img{
-          width: 2.604167rem;
+          width: 2.083333rem;
+          height: 1.5625rem;
         }
       }
     }
