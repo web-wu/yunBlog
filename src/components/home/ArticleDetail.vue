@@ -10,8 +10,7 @@
         <div class="grid-content bg-purple left_con">
           <h2>{{article.title}}</h2>
           <p>
-            <span>作者: {{article.author}}</span>
-            <span>发布时间: {{article.publicDate | dtformat()}}</span>
+            <span>作者: {{article.author}}</span><span>发布时间: {{article.publicDate | dtformat}}</span>
           </p>
           <hr />
           <h5>摘要:{{article.describe}}</h5>
@@ -26,14 +25,18 @@
             <div class="input_user">
               <el-form size="mini" :model="formComment" class="demo-form-inline">
                 <el-form-item>
-                  <el-input placeholder="在这发表您的看法吧" v-model="formComment.comment" @focus="validate_signIn"></el-input>
+                  <el-input placeholder="在这发表您的看法吧" v-model.trim="formComment.comment" @focus="validate_signIn"></el-input>
                 </el-form-item>
                 <el-form-item>
                   <el-button size="mini" type="primary" @click="onSubmit">提交</el-button>
                 </el-form-item>
               </el-form>
               <ul class="commentList">
-                <li><span>{{this.$store.state.username}}:</span><p>{{publicComment}}</p></li>
+                <li v-for="(v, i) in comment_list" :key="i">
+                  <span>{{v.author}}:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <span>{{v.createDate | dateformat}}</span>
+                  <p>{{v.content}}</p>
+                </li>
               </ul>
             </div>
           </div>
@@ -70,27 +73,19 @@
 export default {
   data() {
     return {
+      comment_num: 0,
       publicComment: '',
       article: {},
       formComment: {
         comment: ''
-      }
+      },
+      comment_list: []
     }
   },
   mounted() {
     this.getArticleDetail()
   },
   methods: {
-    async validate_signIn () {
-      const isLogin = await this.$store.dispatch('validate_login')
-      if (!isLogin) {
-        this.$message.info('请先登录再发表评论！！！')
-        this.$router.push('/login')
-      }
-    },
-    onSubmit () {
-      this.publicComment = this.formComment.comment
-    },
     async getArticleDetail () {
       const { data } = await this.$http.post('/getArticleDetail', {
         id: this.$route.params.id
@@ -103,6 +98,26 @@ export default {
       }
       await this.$http.put('/articleNumberChange', { id: this.$route.params.id, num: 1, number: number })
       this.article = data
+      this.getArticle_comment()
+    },
+    async getArticle_comment () {
+      const { data } = await this.$http.post('/getArticle_comment', { article_name: this.article.title })
+      this.comment_list = data
+      this.comment_num = data.length
+    },
+    async validate_signIn () {
+      const isLogin = await this.$store.dispatch('validate_login')
+      if (!isLogin) {
+        this.$message.info('请先登录再发表评论！！！')
+        this.$router.push('/login')
+      }
+    },
+    async onSubmit () {
+      this.publicComment = this.formComment.comment
+      if (this.publicComment.length === 0) return false
+      await this.$http.post('/admin/addComment', { author: this.$store.state.username, content: this.publicComment, article_com: this.article.title })
+      this.getArticle_comment()
+      this.formComment.comment = ''
     }
   }
 }
@@ -164,9 +179,12 @@ export default {
       }
       .commentList{
         li{
-          margin-left: 0.520833rem;
+          margin: 0.104167rem 0.520833rem;
+          background-color: #fff;
+          padding: 0.052083rem 0.104167rem;
+          border-radius: 0.052083rem;
           p{
-            padding: 0.208333rem 4em;
+            padding: 0.104167rem 2em;
           }
         }
       }

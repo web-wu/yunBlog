@@ -7,7 +7,7 @@
         </el-breadcrumb>
         <el-row :gutter="30">
             <el-col :span="6">
-                <el-input v-model.trim="publicDate" placeholder="评论时间搜索" clearable @clear="getCommentList"></el-input>
+                <el-input v-model.trim="article" placeholder="文章评论搜索" clearable @clear="getCommentList"></el-input>
             </el-col>
             <el-col :span="3">
                     <el-button type="primary" @click="searComment">查询</el-button>
@@ -15,8 +15,8 @@
         </el-row>
         <el-table border stripe :data="discussData">
             <el-table-column type="index" width='50'></el-table-column>
-            <el-table-column label="评论人" prop="username"></el-table-column>
-            <el-table-column label="角色" prop="role">
+            <el-table-column label="评论人" prop="author"></el-table-column>
+            <el-table-column label="评论文章" prop="article_com">
             </el-table-column>
             <el-table-column label="评论时间" prop="createDate">
                 <template slot-scope="scope">
@@ -38,13 +38,8 @@
 export default {
   data () {
     return {
-      publicDate: null,
-      discussData: [{
-        username: 'wanger1',
-        role: 'admin',
-        createDate: '2020-6-22',
-        content: 'slhahhklhkhkhkhkhkhkhkhkhkh'
-      }],
+      article: null,
+      discussData: [],
       query: {
         page: 1,
         size: 8,
@@ -70,15 +65,19 @@ export default {
     },
     async getCommentList () {
       const { data } = await this.$http.get('/admin/getCommentList?page=' + this.query.page)
+      // console.log(data)
       this.discussData = data.records
+      this.query.page = data.page
+      this.query.size = data.size
+      this.query.total = data.total
     },
     currentChangeEvent (newPage) {
       this.query.page = newPage
       this.getCommentList()
     },
     async searComment () {
-      if (this.publicDate.length === 0) return this.$message.info('请输入搜索日期!')
-      const { data } = await this.$http.post('/admin/searchComment', { dt: this.publicDate })
+      if (this.article.length === 0) return this.$message.info('请输入搜索文章!')
+      const { data } = await this.$http.post('/admin/searchComment', { article: this.article })
       this.discussData = data
     }
   }
