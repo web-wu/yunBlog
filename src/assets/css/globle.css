@@ -29,26 +29,6 @@ a {
     font-size: 75px;
   }
 }
-@media screen and (max-width: 1120px) {
-  html {
-    font-size: 56px;
-  }
-}
-@media screen and (max-width: 992px) {
-  html {
-    font-size: 49.6px;
-  }
-}
-@media screen and (max-width: 750px) {
-  html {
-    font-size: 37.5px;
-  }
-}
-@media screen and (max-width: 576px) {
-  html {
-    font-size: 28.8px;
-  }
-}
 #pageing {
   margin-top: 0.208333rem;
   font-size: 0.166667rem;

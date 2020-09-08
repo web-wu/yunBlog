@@ -40,6 +40,11 @@ export default {
   .link{
     font-size: 0.166667rem;
     padding: 0.104167rem 0.208333rem;
+    a{
+      &:hover{
+        color: cyan;
+      }
+    }
   }
 }
 </style>

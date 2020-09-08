@@ -12,7 +12,7 @@
       </keep-alive>
     </div>
     <!-- 右边信息布局 -->
-    <div class="content_right">
+    <div class="content_right index_right_content">
       <IdCard></IdCard>
       <Search :tags="tags"></Search>
       <Hotarticle :hotArticle="hotArticle"></Hotarticle>

@@ -10,7 +10,7 @@
                 <el-input v-model="articleDate.title" placeholder="请输入标题"></el-input>
             </el-form-item>
             <el-form-item label="作者:">
-                <el-input v-model="articleDate.author" placeholder="请输入作者"></el-input>
+                <el-input v-model="articleDate.author" readonly></el-input>
             </el-form-item>
             <el-form-item label="标签:">
                 <el-checkbox-group v-model="articleDate.tag">
@@ -46,7 +46,7 @@ export default {
       content: '',
       articleDate: {
         title: '',
-        author: '',
+        author: this.$store.state.username,
         content: '',
         tag: [],
         status: '1',

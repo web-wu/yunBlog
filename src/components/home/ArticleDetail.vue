@@ -33,7 +33,7 @@
               </el-form>
               <ul class="commentList">
                 <li v-for="(v, i) in comment_list" :key="i">
-                  <span>{{v.author}}:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <span>{{v.author}}</span> <span> | </span>
                   <span>{{v.createDate | dateformat}}</span>
                   <p>{{v.content}}</p>
                 </li>
@@ -50,15 +50,16 @@
             </div>
             <div class="info_author">
               <h3>web-wu</h3>
-              <p>文章: <span>122222</span></p>
+              <p>文章: <span>{{author_article_toatal}}</span></p>
             </div>
           </div>
         </div>
         <div class="otherArticle">
           <h3>作者的其他文章推介:</h3>
           <ul>
-            <li>ljkljjkjjjjljjljjljl</li>
-            <li>ljkljjkjjjjljjljjljl</li>
+            <li v-for="(item, index) in author_article_refer" :key="index">
+              {{item.title}}
+            </li>
           </ul>
         </div>
         <div class="ad_site">
@@ -73,13 +74,14 @@
 export default {
   data() {
     return {
-      comment_num: 0,
       publicComment: '',
       article: {},
       formComment: {
         comment: ''
       },
-      comment_list: []
+      comment_list: [],
+      author_article_toatal: null,
+      author_article_refer: []
     }
   },
   mounted() {
@@ -99,11 +101,17 @@ export default {
       await this.$http.put('/articleNumberChange', { id: this.$route.params.id, num: 1, number: number })
       this.article = data
       this.getArticle_comment()
+      this.getAuthor_total(data.author)
+    },
+    async getAuthor_total (username) {
+      const { data } = await this.$http.post('/author_article_total', { author: username })
+      if (data.status !== 1) return false
+      this.author_article_toatal = data.total
+      this.author_article_refer = data.article
     },
     async getArticle_comment () {
       const { data } = await this.$http.post('/getArticle_comment', { article_name: this.article.title })
       this.comment_list = data
-      this.comment_num = data.length
     },
     async validate_signIn () {
       const isLogin = await this.$store.dispatch('validate_login')
@@ -115,9 +123,17 @@ export default {
     async onSubmit () {
       this.publicComment = this.formComment.comment
       if (this.publicComment.length === 0) return false
-      await this.$http.post('/admin/addComment', { author: this.$store.state.username, content: this.publicComment, article_com: this.article.title })
+      const { data } = await this.$http.post('/admin/addComment', { author: this.$store.state.username, content: this.publicComment, article_com: this.article.title })
       this.getArticle_comment()
       this.formComment.comment = ''
+      if (data.status !== 1) return false
+      let number = this.article.comment
+      if (!!number === false) {
+        number = 1
+      } else {
+        number++
+      }
+      await this.$http.put('/articleNumberChange', { id: this.$route.params.id, num: 3, number: number })
     }
   }
 }
@@ -137,6 +153,7 @@ export default {
 }
 .el-row {
   padding-bottom: 0.520833rem;
+  min-height: 9.375rem;
   .left_con,
   .right_con {
     padding: 0.208333rem 0.104167rem;
@@ -217,7 +234,8 @@ export default {
     ul{
       padding: 0.104167rem 0;
       li{
-        padding-left: 1em;
+        list-style-type: circle;
+        margin-left: 2em;
         line-height: 0.270833rem;
         font-size: 0.145833rem;
       }
