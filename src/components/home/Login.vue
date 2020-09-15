@@ -53,6 +53,9 @@ export default {
         if (data.status === 1) {
           this.$message.success('登录成功!')
           this.$router.push('/admin')
+        } else if (data.status === 2) {
+          this.$message.success('登录成功!')
+          this.$router.push('/')
         } else {
           this.$message.error('邮箱或密码错误!')
           return false

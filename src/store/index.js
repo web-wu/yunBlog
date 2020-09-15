@@ -30,7 +30,5 @@ export default new Vuex.Store({
       localStorage.setItem('token', data.token)
       return true
     }
-  },
-  modules: {
   }
 })
