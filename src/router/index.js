@@ -92,11 +92,21 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  const isLogin = await Store.dispatch('validate_login')
-  if (isLogin) {
-    if (to.path === '/login') {
-      next('/admin')
+  const res = await Store.dispatch('validate_login')
+  if (res.status === 1) {
+    if (res.role === 'admin') {
+      if (to.path === '/login') {
+        next('/admin')
+      } else {
+        next()
+      }
     } else {
+      const isNormal = to.matched.some(item => item.path === '/admin')
+      if (isNormal) {
+        next('/')
+      } else if (to.path === '/login') {
+        next('/')
+      }
       next()
     }
   } else {

@@ -24,11 +24,16 @@ export default new Vuex.Store({
     async validate_login (context) {
       const { data } = await axios.get('/admin/validate_login')
       if (data.status === 0) {
-        return false
+        return {
+          status: 0
+        }
       }
       context.commit('login_sign', data.username)
       localStorage.setItem('token', data.token)
-      return true
+      return {
+        status: 1,
+        role: data.role
+      }
     }
   }
 })

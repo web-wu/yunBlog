@@ -18,25 +18,11 @@
             <li>详情页侧边栏: 每位425 * 318px / 500RMB, 共5个位置，已售3个，未售2个。</li>
           </ol>
           <ul>
-            <li>
-              <i class="iconfont iconguanggao"></i>
+            <li v-for="(item, index) of img_list" :key="index">
+              <i :class="className[index]"></i>
               <div class="describe">
-                <h3>首页banner</h3>
-                <img :src="img_list[0].img_url" alt="">
-              </div>
-            </li>
-            <li>
-              <i class="iconfont iconpinpaiwangzhandingzhi"></i>
-              <div class="describe">
-                <h3>首页侧边栏</h3>
-                <img :src="img_list[1].img_url" alt="">
-              </div>
-            </li>
-            <li>
-              <i class="iconfont iconwangzhandingzhi"></i>
-              <div class="describe">
-                <h3>详情页侧边栏</h3>
-                <img :src="img_list[2].img_url" alt="">
+                <h3 v-text="infoList[index]"></h3>
+                <img :src="item.img_url" alt="">
               </div>
             </li>
           </ul>
@@ -49,7 +35,13 @@
 export default {
   data () {
     return {
-      img_list: []
+      img_list: [],
+      infoList: ['首页banner', '首页侧边栏', '详情页侧边栏'],
+      className: [
+        'iconfont iconguanggao',
+        'iconfont iconpinpaiwangzhandingzhi',
+        'iconfont iconwangzhandingzhi'
+      ]
     }
   },
   async created () {
